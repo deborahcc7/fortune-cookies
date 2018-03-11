@@ -1,32 +1,45 @@
 import React from "react";
 import { render } from "react-dom";
-import { FortuneCookie } from "./FortuneCookie";
 import "./styles.css";
+import { FortuneCookie } from "./FortuneCookie";
+import fortuneMessages from "./fortune-messages.json";
+
+function randomMessage() {
+  const randomIndex = Math.floor(Math.random() * fortuneMessages.length);
+  return fortuneMessages[randomIndex];
+}
 
 export class App extends React.Component {
   constructor() {
     super();
-    this.state = { isOpen: false };
+    this.state = {
+      isOpen: false,
+      message: randomMessage()
+    };
   }
+
+  reset = () => {
+    this.setState({
+      isOpen: false,
+      message: randomMessage()
+    });
+  };
 
   setOpen = () => {
     this.setState({ isOpen: true });
   };
 
-  setClosed = () => {
-    this.setState({ isOpen: false });
-  };
-
   render() {
-    const { isOpen } = this.state;
+    const isOpen = this.state.isOpen;
+
     return (
       <div className="App">
         <FortuneCookie isOpen={isOpen} onClick={this.setOpen} />
         {isOpen && (
           <div className="FortuneCookieMessage">
-            <p>The fortune you seek is in another cookie.</p>
-            <button className="FortuneCookieMore" onClick={this.setClosed}>
-              Still hungry?
+            <p>{this.state.message}</p>
+            <button onClick={this.reset} className="FortuneCookieMore">
+              Another Cookie
             </button>
           </div>
         )}

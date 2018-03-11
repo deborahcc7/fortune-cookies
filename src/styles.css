@@ -8,6 +8,7 @@ body {
   background: rgba(192, 69, 69, 1);
   font-family: monospace;
   font-size: 18px;
+  color: white;
 }
 
 .App {
